@@ -7,10 +7,29 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 80px;
+    margin-top: 90px;
+}
+h1 {
+    font-size: 48px;
+    animation: pulse 1.5s infinite;
+    color: #d1006c;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+button {
+    margin-top: 30px;
+    padding: 12px 22px;
+    font-size: 16px;
 }
 #coords {
     margin-top: 20px;
+    font-size: 18px;
+}
+#message {
+    margin-top: 25px;
     font-size: 18px;
 }
 </style>
@@ -19,31 +38,35 @@ body {
 
 <h1>HAPPY VALENTINES</h1>
 
-<div id="coords">
-Waiting for location access.
+<button onclick="getLocation()">Share location</button>
+
+<div id="coords"></div>
+
+<div id="message">
+loser youre just sittin at home scrolling with no one to take you out haha 😂😂😂
 </div>
 
 <script>
-function showPosition(position) {
-    document.getElementById("coords").innerHTML =
-        "Latitude: " + position.coords.latitude.toFixed(6) + "<br>" +
-        "Longitude: " + position.coords.longitude.toFixed(6);
-}
-
-function showError() {
-    document.getElementById("coords").innerHTML =
-        "Location access denied or unavailable.";
-}
-
-if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(showPosition, showError, {
-        enableHighAccuracy: true
-    });
-} else {
-    document.getElementById("coords").innerHTML =
-        "Geolocation not supported.";
+function getLocation() {
+    if (!navigator.geolocation) {
+        document.getElementById("coords").innerText =
+            "Location not supported.";
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            document.getElementById("coords").innerHTML =
+                "Latitude: " + position.coords.latitude.toFixed(6) + "<br>" +
+                "Longitude: " + position.coords.longitude.toFixed(6);
+        },
+        function() {
+            document.getElementById("coords").innerText =
+                "Location permission denied.";
+        }
+    );
 }
 </script>
 
 </body>
 </html>
+
