@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentines</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 80px;
+}
+#coords {
+    margin-top: 20px;
+    font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<h1>HAPPY VALENTINES</h1>
+
+<div id="coords">
+Waiting for location access.
+</div>
+
+<script>
+function showPosition(position) {
+    document.getElementById("coords").innerHTML =
+        "Latitude: " + position.coords.latitude.toFixed(6) + "<br>" +
+        "Longitude: " + position.coords.longitude.toFixed(6);
+}
+
+function showError() {
+    document.getElementById("coords").innerHTML =
+        "Location access denied or unavailable.";
+}
+
+if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showPosition, showError, {
+        enableHighAccuracy: true
+    });
+} else {
+    document.getElementById("coords").innerHTML =
+        "Geolocation not supported.";
+}
+</script>
+
+</body>
+</html>
